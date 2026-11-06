@@ -15,8 +15,10 @@ export const InteractiveTerminal: React.FC = () => {
   const [historyPointer, setHistoryPointer] = useState<number>(-1);
   const [copied, setCopied] = useState(false);
 
+  const terminalBodyRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const isInitialMount = useRef(true);
 
   // Initialize terminal welcome banner
   useEffect(() => {
@@ -41,7 +43,14 @@ export const InteractiveTerminal: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    // Only scroll the terminal's own inner box, never the entire window!
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (rawCmd: string) => {
@@ -332,7 +341,7 @@ console.log("Welcome to MASTER.DEV");`}
           </div>
 
           {/* Terminal Output Area */}
-          <div className="p-6 font-mono text-xs max-h-[460px] overflow-y-auto space-y-4">
+          <div ref={terminalBodyRef} className="p-6 font-mono text-xs max-h-[460px] overflow-y-auto space-y-4 scroll-smooth">
             {history.map((item) => (
               <div key={item.id} className="space-y-1.5">
                 <div className="flex items-center gap-2 text-neutral-400">
@@ -362,7 +371,6 @@ console.log("Welcome to MASTER.DEV");`}
                 onKeyDown={handleKeyDown}
                 placeholder="type 'help', 'skills', 'projects', 'python'..."
                 className="flex-1 bg-transparent text-white font-mono text-xs outline-none caret-[#FF4F2A]"
-                autoFocus
               />
             </div>
             <div ref={bottomRef} />

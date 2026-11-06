@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ParticleIntro } from './components/ParticleIntro';
 import { FloatingCodeSnippets } from './components/FloatingCodeSnippets';
 import { InteractiveKeyboard } from './components/InteractiveKeyboard';
@@ -29,6 +29,30 @@ export default function App() {
   const [introDismissed, setIntroDismissed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Reliable scroll-to-top on mount
+  useEffect(() => {
+    // Clear any hash that might force premature anchor jumping on fresh load
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    
+    // Immediate scroll reset
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+    // RequestAnimationFrame double-check after layout calculation
+    const rafId = requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
+
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+
+  const handleEnterUniverse = () => {
+    setIntroDismissed(true);
+    // Ensure viewport stays at top after intro is dismissed
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  };
+
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
     const element = document.getElementById(id);
@@ -43,7 +67,7 @@ export default function App() {
       {!introDismissed && (
         <ParticleIntro
           isSkipped={introDismissed}
-          onEnter={() => setIntroDismissed(true)}
+          onEnter={handleEnterUniverse}
         />
       )}
 
