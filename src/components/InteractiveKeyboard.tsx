@@ -64,8 +64,8 @@ export const InteractiveKeyboard: React.FC = () => {
     const keyboardGroup = new THREE.Group();
     scene.add(keyboardGroup);
 
-    // Keyboard Base Plate
-    const baseGeo = new THREE.BoxGeometry(11, 0.6, 6.5);
+    // Keyboard Base Plate (widened to fit up to 7 keys cleanly)
+    const baseGeo = new THREE.BoxGeometry(12.6, 0.6, 6.5);
     const baseMat = new THREE.MeshStandardMaterial({
       color: 0x121212,
       roughness: 0.35,
@@ -78,7 +78,7 @@ export const InteractiveKeyboard: React.FC = () => {
     keyboardGroup.add(baseMesh);
 
     // Orange chamfered accent rim around keyboard
-    const rimGeo = new THREE.BoxGeometry(11.15, 0.1, 6.65);
+    const rimGeo = new THREE.BoxGeometry(12.75, 0.1, 6.65);
     const rimMat = new THREE.MeshStandardMaterial({
       color: 0xff4f2a,
       roughness: 0.2,
@@ -93,11 +93,11 @@ export const InteractiveKeyboard: React.FC = () => {
     // Generate Keycaps
     const keyGeo = new THREE.BoxGeometry(1.2, 0.55, 1.2);
 
-    // Layout grid: 3 rows
+    // Layout grid: 3 rows with clean spacing
     const layout = [
-      ['PY', 'C', 'JS', 'RCT', 'H5'],
-      ['CS3', 'NP', 'PD', 'CV', 'FST'],
-      ['3JS', 'GIT', 'GH', 'AWS']
+      ['PY', 'C', 'JS', 'H5', 'CS3'],
+      ['CV', 'NP', 'MP', 'GEN', 'PD', 'SQL'],
+      ['RCT', 'VIT', 'FST', 'GIT', 'GH', '3JS', 'AMP']
     ];
 
     const keyMeshMap = new Map<THREE.Mesh, TechKey>();

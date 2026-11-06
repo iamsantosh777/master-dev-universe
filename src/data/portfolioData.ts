@@ -324,11 +324,12 @@ export interface TechKey {
 }
 
 export const TECH_KEYS_DATA: TechKey[] = [
+  // Programming
   {
     key: 'PY',
     name: 'Python',
     category: 'Languages',
-    proficiency: 'Core Language',
+    proficiency: 'Primary Language',
     description: 'Primary engineering language for AI/ML prototyping, Computer Vision pipelines, automation scripting, and backend microservices.',
     iconName: 'Terminal',
     color: '#3776AB'
@@ -347,23 +348,14 @@ export const TECH_KEYS_DATA: TechKey[] = [
     name: 'JavaScript (ES6+)',
     category: 'Languages',
     proficiency: 'Proficient',
-    description: 'Modern asynchronous JavaScript, Canvas API manipulation, DOM event architecture, and full-stack interactive client applications.',
+    description: 'Modern asynchronous JavaScript, Canvas API manipulation, DOM event architecture, and interactive client applications.',
     iconName: 'Code',
     color: '#F7DF1E'
   },
   {
-    key: 'RCT',
-    name: 'React',
-    category: 'Frontend',
-    proficiency: 'Proficient',
-    description: 'Component architecture, custom hooks, reactive state synchronization, client-side routing, and modern UI library integrations.',
-    iconName: 'Layers',
-    color: '#61DAFB'
-  },
-  {
     key: 'H5',
     name: 'HTML5 Semantic',
-    category: 'Frontend',
+    category: 'Languages',
     proficiency: 'Fluent',
     description: 'Accessible semantic structures, Canvas 2D graphics rendering, multimedia streaming APIs, and progressive web performance.',
     iconName: 'Globe',
@@ -372,11 +364,22 @@ export const TECH_KEYS_DATA: TechKey[] = [
   {
     key: 'CS3',
     name: 'CSS3 / Tailwind',
-    category: 'Frontend',
+    category: 'Languages',
     proficiency: 'Fluent',
     description: 'Fluid responsive design, modern utility-first architecture, keyframe animations, glassmorphism, and dark cyberpunk themes.',
     iconName: 'Palette',
     color: '#38BDF8'
+  },
+
+  // AI & Computer Vision
+  {
+    key: 'CV',
+    name: 'OpenCV',
+    category: 'Data / AI',
+    proficiency: 'Computer Vision',
+    description: 'Image processing, facial landmark detection, contours, edge detection, video feed processing, and visual telemetry filters.',
+    iconName: 'Eye',
+    color: '#FF4F2A'
   },
   {
     key: 'NP',
@@ -388,44 +391,75 @@ export const TECH_KEYS_DATA: TechKey[] = [
     color: '#013243'
   },
   {
+    key: 'MP',
+    name: 'MediaPipe',
+    category: 'Data / AI',
+    proficiency: 'Ocular / Face Mesh',
+    description: 'High-speed pipeline for facial mesh landmark detection, iris tracking, and gesture calculation in driver safety systems.',
+    iconName: 'Eye',
+    color: '#00D9FF'
+  },
+  {
+    key: 'GEN',
+    name: 'Gen AI APIs',
+    category: 'Data / AI',
+    proficiency: 'Applied Prototyping',
+    description: 'Exploring multimodal synthesis, large language models, structured reasoning prompts, and AI-assisted educational modules.',
+    iconName: 'Zap',
+    color: '#10B981'
+  },
+
+  // Data
+  {
     key: 'PD',
     name: 'Pandas',
     category: 'Data / AI',
-    proficiency: 'Core Toolkit',
-    description: 'Data munging, cleaning tabular datasets, DataFrame reshaping, exploratory data analysis, and feature engineering workflows.',
+    proficiency: 'Data Wrangling',
+    description: 'Data munging, cleaning tabular datasets, DataFrame reshaping, exploratory data analysis, and feature preparation.',
     iconName: 'Table',
     color: '#150458'
   },
   {
-    key: 'CV',
-    name: 'OpenCV',
+    key: 'SQL',
+    name: 'SQL',
     category: 'Data / AI',
-    proficiency: 'Computer Vision',
-    description: 'Image processing, facial landmark detection, contours, edge detection, video feed processing, and visual telemetry filters.',
-    iconName: 'Eye',
-    color: '#FF4F2A'
+    proficiency: 'Relational Queries',
+    description: 'Formulating structured relational schemas, joins, aggregations, filtering, and database transaction queries.',
+    iconName: 'Table',
+    color: '#00758F'
+  },
+
+  // Frameworks & Tools
+  {
+    key: 'RCT',
+    name: 'React',
+    category: 'Frontend',
+    proficiency: 'Proficient',
+    description: 'Component architecture, custom hooks, reactive state synchronization, client-side routing, and modern UI library integrations.',
+    iconName: 'Layers',
+    color: '#61DAFB'
+  },
+  {
+    key: 'VIT',
+    name: 'Vite',
+    category: 'Frontend',
+    proficiency: 'Build Tooling',
+    description: 'Ultra-fast ESM bundler, rapid development HMR server, optimized tree-shaking, and production assets packaging.',
+    iconName: 'Zap',
+    color: '#646CFF'
   },
   {
     key: 'FST',
     name: 'FastAPI',
     category: 'Backend & Cloud',
     proficiency: 'Intermediate',
-    description: 'High-speed asynchronous Python REST microservices, Pydantic data schemas, automatic OpenAPI documentation, and model deployment.',
+    description: 'High-speed asynchronous Python REST microservices, Pydantic schemas, and lightweight model serving endpoints.',
     iconName: 'Zap',
     color: '#059669'
   },
   {
-    key: '3JS',
-    name: 'Three.js',
-    category: 'Frontend',
-    proficiency: 'Creative Tech',
-    description: 'Interactive 3D WebGL scenes, particle systems, procedural meshes, physical materials, lighting, and camera orbit controls.',
-    iconName: 'Box',
-    color: '#00D9FF'
-  },
-  {
     key: 'GIT',
-    name: 'Git Version Control',
+    name: 'Git',
     category: 'Tools',
     proficiency: 'Daily Workflow',
     description: 'Branching strategies, atomic commits, merge conflict resolution, rebasing, and disciplined repository management.',
@@ -442,11 +476,22 @@ export const TECH_KEYS_DATA: TechKey[] = [
     color: '#FFFFFF'
   },
   {
-    key: 'AWS',
-    name: 'AWS Cloud',
+    key: '3JS',
+    name: 'Three.js',
+    category: 'Frontend',
+    proficiency: 'Creative Tech',
+    description: 'Interactive 3D WebGL scenes, particle systems, procedural meshes, physical materials, lighting, and camera orbit controls.',
+    iconName: 'Box',
+    color: '#00D9FF'
+  },
+
+  // Cloud
+  {
+    key: 'AMP',
+    name: 'AWS Amplify',
     category: 'Backend & Cloud',
-    proficiency: 'Foundations',
-    description: 'Cloud fundamentals, EC2 compute instances, S3 storage buckets, and architectural awareness for scalable application deployments.',
+    proficiency: 'Production Deployment',
+    description: 'Full-stack cloud hosting for MASTER.DEV with Git-connected continuous deployment, automated builds, and global CDN delivery.',
     iconName: 'Cloud',
     color: '#FF9900'
   }
@@ -464,75 +509,51 @@ export interface TimelineMilestone {
 export const LEARNING_JOURNEY_DATA: TimelineMilestone[] = [
   {
     step: '01',
-    topic: 'Python Programming',
-    focus: 'Language Mastery & Object-Oriented Principles',
+    topic: 'Programming Fundamentals',
+    focus: 'C Programming, Logic & Algorithmic Foundations',
     category: 'Foundation',
-    description: 'Mastered Python syntax, functional programming paradigms, modular architecture, and file I/O operations as the primary computing base.',
-    highlights: ['OOP paradigms & classes', 'Exception handling & generators', 'Package ecosystem & pip']
+    description: 'Developed strong foundational computational logic, pointers, memory addressing (stack and heap allocation), control structures, and recursion in C.',
+    highlights: ['Low-level memory model', 'Pointer arithmetic & structures', 'Modular code architecture']
   },
   {
     step: '02',
-    topic: 'C Programming',
-    focus: 'Low-Level Architecture & Memory',
-    category: 'Foundation',
-    description: 'Delved into memory allocation (malloc/free), pointer arithmetic, system stack/heap dynamics, and bitwise operations.',
-    highlights: ['Pointers & dynamic memory', 'Structures & memory alignment', 'Compilation lifecycle (gcc)']
+    topic: 'Python & Data Analysis',
+    focus: 'Python, NumPy, Pandas & SQL',
+    category: 'Data Science',
+    description: 'Transitioned to Python as primary problem-solving language. Utilized NumPy for tensor operations, Pandas for dataset wrangling, and SQL for relational queries.',
+    highlights: ['Vectorized array operations', 'DataFrame transformations & cleansing', 'Relational database schema queries']
   },
   {
     step: '03',
-    topic: 'Data Structures & Algorithms',
-    focus: 'Computational Thinking & Efficiency',
-    category: 'Core CS',
-    description: 'Constructed linear and non-linear data structures from first principles, studying Big-O temporal and spatial complexity tradeoffs.',
-    highlights: ['Linked lists, Stacks, Queues', 'Binary Search Trees & Graphs', 'Sorting & search optimizations']
+    topic: 'Frontend Development',
+    focus: 'Modern JavaScript (ES6+), React & Tailwind CSS',
+    category: 'Web & Cloud',
+    description: 'Constructed responsive, dynamic single-page web applications utilizing React component lifecycles, hooks, state patterns, and Tailwind modern utility styling.',
+    highlights: ['Component hierarchy & reactivity', 'Custom React hooks & state flow', 'Responsive design & micro-interactions']
   },
   {
     step: '04',
-    topic: 'NumPy & Pandas',
-    focus: 'Vectorized Computing & Data Wrangling',
-    category: 'Data Science',
-    description: 'Unlocked data analytics capabilities through vectorized tensor operations, multi-indexed DataFrames, and statistical data cleaning.',
-    highlights: ['Ndarray slicing & broadcasting', 'Tabular cleaning & feature prep', 'Matrix math & linear algebra']
+    topic: 'AI/ML & Computer Vision',
+    focus: 'OpenCV, MediaPipe & Machine Learning Experimentation',
+    category: 'Applied AI',
+    description: 'Actively exploring image processing pipelines, facial mesh landmark triangulation, Eye-Aspect-Ratio computation, and real-time vision algorithms for assistive tech.',
+    highlights: ['OpenCV filter kernels & transforms', 'MediaPipe 68-point ocular mesh', 'Gaze Guard driver drowsiness models']
   },
   {
     step: '05',
-    topic: 'SQL & Database Engineering',
-    focus: 'Relational Schema Design & Querying',
-    category: 'Core CS',
-    description: 'Formulated complex multi-table joins, indexing strategies, normalization patterns, and transactional ACID compliance queries.',
-    highlights: ['DDL/DML operations & subqueries', '3NF schema normalization', 'Aggregations & window functions']
+    topic: 'Interactive 3D Web Development',
+    focus: 'Three.js, WebGL & Creative Tech',
+    category: 'Web & Cloud',
+    description: 'Bridging engineering with creative computing through WebGL scenes, particle physics, 3D mechanical models, procedural shaders, and interactive digital art.',
+    highlights: ['Interactive 3D mesh rendering', 'Raycasting & camera choreography', 'Canvas-based algorithmic art']
   },
   {
     step: '06',
-    topic: 'React & Modern Frontend Development',
-    focus: 'Interactive UI Architecture',
+    topic: 'AWS Cloud Deployment',
+    focus: 'AWS Amplify & CI/CD Pipelines',
     category: 'Web & Cloud',
-    description: 'Engineered responsive single-page web applications using React component lifecycles, hooks, Tailwind styling, and modern build tooling.',
-    highlights: ['Component hierarchy & props', 'State management & custom hooks', 'Modern responsive layouts']
-  },
-  {
-    step: '07',
-    topic: 'Git & GitHub Version Control',
-    focus: 'Collaborative Engineering Workflow',
-    category: 'Web & Cloud',
-    description: 'Institutionalized clean commit hygiene, Git branch management, open-source collaboration, and distributed code tracking.',
-    highlights: ['Branching & merge management', 'PR reviews & issue tracking', 'Repository hygiene']
-  },
-  {
-    step: '08',
-    topic: 'AI / ML & Computer Vision Experimentation',
-    focus: 'Applied Intelligence in Practice',
-    category: 'Applied AI',
-    description: 'Actively exploring convolutional visual feature extraction, MediaPipe facial landmarks, and model integration for real-world assistive systems.',
-    highlights: ['OpenCV image transformations', 'Facial & ocular landmark detection', 'Driver alertness prototyping']
-  },
-  {
-    step: '09',
-    topic: 'Cloud Deployment & AWS Foundations',
-    focus: 'Deploying & Hosting Systems',
-    category: 'Web & Cloud',
-    description: 'Gaining practical familiarity with cloud compute instances (EC2), cloud object stores (S3), and continuous deployment pipelines.',
-    highlights: ['Virtual machine provisioning', 'Cloud storage & security groups', 'Hosting web services']
+    description: 'Successfully deployed the MASTER.DEV production portfolio to AWS Amplify with automated build triggers, HTTPS custom domain setup, and global CDN caching.',
+    highlights: ['AWS Amplify deployment pipeline', 'Environment variable handling', 'Production bundle optimization']
   }
 ];
 
@@ -549,6 +570,17 @@ export interface AchievementItem {
 }
 
 export const ACHIEVEMENTS_DATA: AchievementItem[] = [
+  {
+    id: 'aws-amplify-deploy',
+    category: 'Technical Milestone',
+    title: 'MASTER.DEV Production Deployment on AWS Amplify',
+    organization: 'AWS Cloud Architecture',
+    timeframe: 'Deployed 2024',
+    metric: 'Live Cloud System',
+    description: 'Architected, containerized, and deployed the full MASTER.DEV interactive portfolio ecosystem to AWS Amplify with continuous deployment pipelines and CDN edge distribution.',
+    verified: true,
+    statusText: 'Verified Cloud Deployment'
+  },
   {
     id: 'btech-specialization',
     category: 'Academics',
@@ -577,8 +609,8 @@ export const ACHIEVEMENTS_DATA: AchievementItem[] = [
     title: 'Computer Vision & AI Prototyping Projects',
     organization: 'Independent Engineering Lab',
     timeframe: 'Ongoing',
-    metric: '5+ Projects Underway',
-    description: 'Actively architecting Gaze Guard AI, Citra algorithmic art transformer, Vernacular Pedagogy AI concept, and Raksha disaster response systems.',
+    metric: '5 Projects Built/In-Progress',
+    description: 'Actively architecting Gaze Guard AI, Citra algorithmic art transformer, Vernacular Pedagogy AI concept, Raksha disaster response systems, and Master Terminal Arcade.',
     verified: true,
     statusText: 'Verified Codebases'
   },
@@ -598,9 +630,9 @@ export const ACHIEVEMENTS_DATA: AchievementItem[] = [
     category: 'Technical Milestone',
     title: 'Industry Certifications & Hackathons',
     organization: 'Upcoming Milestone Slot',
-    timeframe: 'Targeting 2024–2025',
-    metric: 'In Preparation',
-    description: 'Actively preparing for cloud certification exams (AWS Cloud Practitioner) and collegiate AI/ML hackathon challenges. [Evidence slot maintained per strict transparency standards]',
+    timeframe: 'In Preparation',
+    metric: 'Evidence Slot',
+    description: 'Actively preparing for cloud certification exams and collegiate AI/ML hackathon challenges. Transparent slot maintained per zero-fabrication policy.',
     verified: false,
     statusText: 'Genuine Preparation Slot'
   }

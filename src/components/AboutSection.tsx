@@ -188,13 +188,13 @@ export const AboutSection: React.FC = () => {
           <div className="lg:col-span-7 space-y-6">
             <div className="space-y-4 text-base md:text-lg text-neutral-300 leading-relaxed font-sans font-light">
               <p>
-                I am <strong className="text-white font-semibold">Deekshith Varanasi</strong>, a second-year B.Tech student in <span className="text-[#FF4F2A] font-semibold">Computer Science & Engineering</span> specializing in <span className="text-white font-semibold">Artificial Intelligence & Machine Learning</span> at <span className="text-[#00D9FF] font-semibold">VVITU (Vignan's Institute of Information Technology)</span>.
+                I am <strong className="text-white font-semibold">Deekshith Varanasi</strong>, a second-year B.Tech Computer Science and Engineering student specializing in <span className="text-[#FF4F2A] font-semibold">Artificial Intelligence & Machine Learning</span> at <span className="text-[#00D9FF] font-semibold">VVITU (Vignan's Institute of Information Technology)</span>.
               </p>
               <p>
-                My engineering pursuit centers on transforming theoretical machine learning algorithms into tangible, high-speed human interfaces. Rather than treating AI as a black box, I explore low-level computer vision routines, facial landmark geometries, and responsive web systems that run on client devices with zero latency.
+                My technical focus lies in <strong className="text-white font-medium">artificial intelligence, machine learning, computer vision, and software engineering</strong>. Rather than superficial implementations, I explore real-time ocular landmark calculations, driver alertness algorithms, and scalable web architectures.
               </p>
               <p>
-                Beyond code, I have a deep passion for <strong className="text-white font-semibold">singing and vocal arts</strong>. I view music and software architecture through the same lens: both demand rhythmic discipline, structural harmony, and emotional resonance.
+                Over the course of my university journey, I have actively engineered <span className="text-white font-medium">personal and academic projects</span> that push beyond textbook theory into tangible code. Alongside deep programming and creative experiments, I nurture a lifelong passion for <strong className="text-white font-semibold">singing and vocal arts</strong>—embracing both analytical rigor and creative expression.
               </p>
             </div>
 

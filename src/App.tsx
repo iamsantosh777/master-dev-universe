@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { ParticleIntro } from './components/ParticleIntro';
 import { FloatingCodeSnippets } from './components/FloatingCodeSnippets';
-import { InteractiveKeyboard } from './components/InteractiveKeyboard';
+import { AboutSection } from './components/AboutSection';
+import { TechnicalSkillsSection } from './components/TechnicalSkillsSection';
 import { ProjectCarousel } from './components/ProjectCarousel';
 import { InteractiveCodePlayground } from './components/InteractiveCodePlayground';
-import { AboutSection } from './components/AboutSection';
 import { LearningJourney } from './components/LearningJourney';
 import { AchievementsSection } from './components/AchievementsSection';
 import { GitHubSection } from './components/GitHubSection';
 import { InteractiveTerminal } from './components/InteractiveTerminal';
 import { ContactSection } from './components/ContactSection';
+import { Footer } from './components/Footer';
 import { 
   Terminal, 
   Sparkles, 
@@ -22,24 +23,25 @@ import {
   Code2, 
   Menu, 
   X,
-  ExternalLink
+  ExternalLink,
+  ArrowUp,
+  User,
+  GraduationCap
 } from 'lucide-react';
 
 export default function App() {
   const [introDismissed, setIntroDismissed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Reliable scroll-to-top on mount
   useEffect(() => {
-    // Clear any hash that might force premature anchor jumping on fresh load
     if (window.location.hash) {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
-    
-    // Immediate scroll reset
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // RequestAnimationFrame double-check after layout calculation
     const rafId = requestAnimationFrame(() => {
       window.scrollTo(0, 0);
     });
@@ -47,9 +49,29 @@ export default function App() {
     return () => cancelAnimationFrame(rafId);
   }, []);
 
+  // Track active section for consistent navbar highlights & back-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+
+      const sectionIds = ['hero', 'about', 'skills', 'projects', 'journey', 'achievements', 'contact'];
+      const scrollPos = window.scrollY + 200;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveSection(sectionIds[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleEnterUniverse = () => {
     setIntroDismissed(true);
-    // Ensure viewport stays at top after intro is dismissed
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
@@ -59,6 +81,10 @@ export default function App() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -71,8 +97,20 @@ export default function App() {
         />
       )}
 
+      {/* Floating Back To Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-[#141414]/90 hover:bg-[#FF4F2A] text-neutral-300 hover:text-white border border-white/10 hover:border-[#FF4F2A] shadow-2xl backdrop-blur-md transition-all duration-300 group"
+          title="Return to Top"
+          aria-label="Back to Top"
+        >
+          <ArrowUp size={18} className="group-hover:-translate-y-0.5 transition-transform" />
+        </button>
+      )}
+
       {/* Navigation Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-[#080808]/85 backdrop-blur-xl border-b border-white/5 transition-all">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-[#080808]/90 backdrop-blur-xl border-b border-white/5 transition-all">
         <div className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
           {/* Logo Branding */}
           <a
@@ -98,47 +136,65 @@ export default function App() {
             </div>
           </a>
 
-          {/* Desktop Nav Items */}
-          <nav className="hidden lg:flex items-center gap-7 text-xs font-mono">
-            <button
-              onClick={() => scrollToSection('superpowers')}
-              className="text-neutral-300 hover:text-[#FF4F2A] transition-colors"
-            >
-              SUPERPOWERS
-            </button>
-            <button
-              onClick={() => scrollToSection('projects')}
-              className="text-neutral-300 hover:text-[#FF4F2A] transition-colors"
-            >
-              PROJECTS
-            </button>
-            <button
-              onClick={() => scrollToSection('code-playground')}
-              className="text-neutral-300 hover:text-[#00D9FF] transition-colors"
-            >
-              CODE ENGINE
-            </button>
+          {/* Desktop Nav Items in Reorganized Order */}
+          <nav className="hidden lg:flex items-center gap-6 text-xs font-mono">
             <button
               onClick={() => scrollToSection('about')}
-              className="text-neutral-300 hover:text-[#FF4F2A] transition-colors"
+              className={`transition-colors py-1 border-b-2 ${
+                activeSection === 'about'
+                  ? 'text-white border-[#FF4F2A] font-bold'
+                  : 'text-neutral-400 border-transparent hover:text-white'
+              }`}
             >
               ABOUT
             </button>
             <button
+              onClick={() => scrollToSection('skills')}
+              className={`transition-colors py-1 border-b-2 ${
+                activeSection === 'skills'
+                  ? 'text-white border-[#FF4F2A] font-bold'
+                  : 'text-neutral-400 border-transparent hover:text-white'
+              }`}
+            >
+              SKILLS
+            </button>
+            <button
+              onClick={() => scrollToSection('projects')}
+              className={`transition-colors py-1 border-b-2 ${
+                activeSection === 'projects'
+                  ? 'text-white border-[#FF4F2A] font-bold'
+                  : 'text-neutral-400 border-transparent hover:text-white'
+              }`}
+            >
+              PROJECTS
+            </button>
+            <button
               onClick={() => scrollToSection('journey')}
-              className="text-neutral-300 hover:text-[#FF4F2A] transition-colors"
+              className={`transition-colors py-1 border-b-2 ${
+                activeSection === 'journey'
+                  ? 'text-white border-[#FF4F2A] font-bold'
+                  : 'text-neutral-400 border-transparent hover:text-white'
+              }`}
             >
               JOURNEY
             </button>
             <button
-              onClick={() => scrollToSection('terminal')}
-              className="text-neutral-300 hover:text-[#00D9FF] transition-colors"
+              onClick={() => scrollToSection('achievements')}
+              className={`transition-colors py-1 border-b-2 ${
+                activeSection === 'achievements'
+                  ? 'text-white border-[#FF4F2A] font-bold'
+                  : 'text-neutral-400 border-transparent hover:text-white'
+              }`}
             >
-              TERMINAL
+              ACHIEVEMENTS
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-neutral-300 hover:text-[#FF4F2A] transition-colors"
+              className={`transition-colors py-1 border-b-2 ${
+                activeSection === 'contact'
+                  ? 'text-white border-[#FF4F2A] font-bold'
+                  : 'text-neutral-400 border-transparent hover:text-white'
+              }`}
             >
               CONTACT
             </button>
@@ -146,12 +202,18 @@ export default function App() {
 
           {/* Right Action Area */}
           <div className="hidden sm:flex items-center gap-3">
+            {/* Live deployment indicator */}
+            <div className="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-[11px] font-mono mr-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>AWS AMPLIFY // LIVE</span>
+            </div>
+
             <a
-              href="https://github.com/iamsantosh777"
+              href="https://github.com/iamsantosh777/master-dev-universe"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-white/30 transition-colors"
-              title="GitHub Profile"
+              title="MASTER.DEV GitHub Repo (iamsantosh777/master-dev-universe)"
             >
               <Github size={16} />
             </a>
@@ -168,7 +230,7 @@ export default function App() {
               onClick={() => scrollToSection('contact')}
               className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#FF4F2A] to-[#FF7849] hover:opacity-90 text-white font-mono text-xs font-bold tracking-wider shadow-md shadow-[#FF4F2A]/30 transition-all"
             >
-              ENGAGE
+              CONNECT
             </button>
           </div>
 
@@ -186,59 +248,62 @@ export default function App() {
         {mobileMenuOpen && (
           <div className="lg:hidden px-6 py-6 bg-[#0E0E0E] border-b border-white/10 space-y-3 font-mono text-xs">
             <button
-              onClick={() => scrollToSection('superpowers')}
+              onClick={() => scrollToSection('hero')}
               className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
             >
-              ● 3D TECH KEYBOARD
-            </button>
-            <button
-              onClick={() => scrollToSection('projects')}
-              className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
-            >
-              ● 3D PROJECTS CAROUSEL
-            </button>
-            <button
-              onClick={() => scrollToSection('code-playground')}
-              className="block w-full text-left py-2 text-neutral-300 hover:text-[#00D9FF]"
-            >
-              ● CODE PLAYGROUND
+              01 // HERO / INTRODUCTION
             </button>
             <button
               onClick={() => scrollToSection('about')}
               className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
             >
-              ● ABOUT & PHILOSOPHY
+              02 // ABOUT ME
+            </button>
+            <button
+              onClick={() => scrollToSection('skills')}
+              className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
+            >
+              03 // TECHNICAL SKILLS
+            </button>
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
+            >
+              04 // FEATURED PROJECTS
             </button>
             <button
               onClick={() => scrollToSection('journey')}
               className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
             >
-              ● LEARNING JOURNEY
+              05 // LEARNING JOURNEY
             </button>
             <button
               onClick={() => scrollToSection('achievements')}
               className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
             >
-              ● ACHIEVEMENTS
-            </button>
-            <button
-              onClick={() => scrollToSection('github')}
-              className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
-            >
-              ● GITHUB PULSE
-            </button>
-            <button
-              onClick={() => scrollToSection('terminal')}
-              className="block w-full text-left py-2 text-neutral-300 hover:text-[#00D9FF]"
-            >
-              ● INTERACTIVE TERMINAL
+              06 // ACHIEVEMENTS & CERTIFICATIONS
             </button>
             <button
               onClick={() => scrollToSection('contact')}
               className="block w-full text-left py-2 text-neutral-300 hover:text-[#FF4F2A]"
             >
-              ● CONTACT PROTOCOL
+              07 // CONTACT
             </button>
+
+            <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-neutral-400">
+              <span className="flex items-center gap-1.5 text-emerald-400">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Deployed on AWS Amplify
+              </span>
+              <a
+                href="https://github.com/iamsantosh777/master-dev-universe"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white underline"
+              >
+                Repo ↗
+              </a>
+            </div>
           </div>
         )}
       </header>
@@ -246,7 +311,7 @@ export default function App() {
       {/* Main Content Area */}
       <main className="relative pt-20">
         {/* ========================================================
-            2. HERO SECTION
+            1. HERO / INTRODUCTION
             ======================================================== */}
         <section id="hero" className="relative min-h-[92vh] flex items-center justify-center py-20 px-6 md:px-12 bg-cyber-grid overflow-hidden">
           {/* Ambient Lighting Orbs */}
@@ -256,73 +321,101 @@ export default function App() {
           <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             {/* Left Hero Content (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
-              {/* Live Availability Badge */}
-              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-neutral-900/90 border border-neutral-800 shadow-inner">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-                </span>
-                <span className="font-mono text-xs uppercase tracking-wider text-neutral-300">
-                  AVAILABLE FOR COLLABORATION // VVITU
-                </span>
-              </div>
+              {/* Live Deployment & Availability Badge */}
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-neutral-900/90 border border-neutral-800 shadow-inner">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
+                  <span className="font-mono text-xs uppercase tracking-wider text-neutral-300">
+                    2ND-YEAR B.TECH CSE (AI/ML) // VVITU
+                  </span>
+                </div>
 
-              {/* Main Heading */}
-              <div className="space-y-1">
-                <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-white uppercase leading-[1.05]">
-                  BUILDING INTELLIGENCE.
-                </h1>
-                <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#FF4F2A] via-[#FF7849] to-[#00D9FF] uppercase leading-[1.05]">
-                  ENGINEERING EXPERIENCES.
-                </h1>
-              </div>
-
-              {/* Name & Subtitle */}
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                  DEEKSHITH VARANASI
-                </h2>
-                <div className="font-mono text-xs sm:text-sm text-[#00D9FF] tracking-wider mt-1 uppercase font-semibold">
-                  AI/ML ENGINEER IN PROGRESS | CREATIVE DEVELOPER | BUILDER
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 font-mono text-[11px]">
+                  <span>DEPLOYED ON AWS AMPLIFY</span>
                 </div>
               </div>
 
-              {/* Description */}
+              {/* Name & Identity */}
+              <div>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white uppercase font-sans">
+                  DEEKSHITH VARANASI
+                </h1>
+                <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#FF4F2A] font-mono tracking-tight mt-1 uppercase">
+                  AI/ML ENGINEER IN PROGRESS
+                </div>
+                <div className="font-mono text-xs sm:text-sm text-[#00D9FF] tracking-wider mt-1.5 uppercase font-semibold">
+                  Creative Developer | Student Builder | Problem Solver
+                </div>
+              </div>
+
+              {/* Compelling Short Introduction */}
               <p className="text-base sm:text-lg text-neutral-300 font-sans leading-relaxed max-w-2xl font-light">
-                A second-year B.Tech Computer Science and Engineering student specializing in <strong className="text-white font-medium">Artificial Intelligence and Machine Learning at VVITU</strong>.
+                A second-year Computer Science and Engineering student specializing in <strong className="text-white font-medium">Artificial Intelligence and Machine Learning at VVITU</strong>.
                 <br /><br />
-                I explore the intersection of artificial intelligence, computer vision, software engineering and creative technology.
+                I explore the intersection of artificial intelligence, computer vision, software engineering and creative technology—building practical tools from ocular driver safety systems to interactive 3D web applications.
               </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              {/* Verified Verifiable Statistics */}
+              <div className="grid grid-cols-3 gap-3 p-3.5 rounded-2xl bg-[#0D0D0D] border border-white/5 max-w-lg font-mono">
+                <div>
+                  <div className="text-[10px] text-neutral-500 uppercase">ACADEMIC STANDING</div>
+                  <div className="text-sm font-bold text-white mt-0.5">86% XII MPC</div>
+                </div>
+                <div>
+                  <div className="text-[10px] text-neutral-500 uppercase">PROJECTS BUILT</div>
+                  <div className="text-sm font-bold text-[#FF4F2A] mt-0.5">5 Software Repos</div>
+                </div>
+                <div>
+                  <div className="text-[10px] text-neutral-500 uppercase">CLOUD HOSTING</div>
+                  <div className="text-sm font-bold text-[#00D9FF] mt-0.5">AWS Amplify</div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   onClick={() => scrollToSection('projects')}
-                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#FF4F2A] to-[#FF7849] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider shadow-xl shadow-[#FF4F2A]/30 hover:shadow-[#FF4F2A]/60 hover:scale-[1.02] transition-all flex items-center gap-2 group"
+                  className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#FF4F2A] to-[#FF7849] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider shadow-xl shadow-[#FF4F2A]/30 hover:shadow-[#FF4F2A]/60 hover:scale-[1.02] transition-all flex items-center gap-2 group"
                 >
                   <Sparkles size={16} />
                   <span>EXPLORE PROJECTS</span>
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                <button
+                  onClick={() => scrollToSection('about')}
+                  className="px-6 py-3.5 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-700/80 text-white font-mono text-xs sm:text-sm font-medium tracking-wider transition-all flex items-center gap-2"
+                >
+                  <User size={15} className="text-[#00D9FF]" />
+                  <span>ABOUT ME</span>
                 </button>
 
                 <a
-                  href="https://github.com/iamsantosh777"
+                  href="https://github.com/iamsantosh777/master-dev-universe"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-4 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-700/80 text-white font-mono text-xs sm:text-sm font-medium tracking-wider transition-all flex items-center gap-2 group"
+                  className="px-4 py-3.5 rounded-xl bg-black/50 hover:bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white font-mono text-xs transition-colors flex items-center gap-2"
+                  title="View GitHub Repository"
                 >
-                  <Github size={16} />
-                  <span>VIEW GITHUB</span>
-                  <ExternalLink size={14} className="text-neutral-400 group-hover:text-white" />
+                  <Github size={15} />
+                  <span>GITHUB</span>
+                  <ExternalLink size={12} className="text-neutral-500" />
                 </a>
 
-                <button
-                  onClick={() => scrollToSection('terminal')}
-                  className="px-5 py-4 rounded-xl bg-black/40 hover:bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white font-mono text-xs transition-colors flex items-center gap-2"
+                <a
+                  href="https://www.linkedin.com/in/santosh-subramanya-deekshith-varanasi-8a79b4393"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-3.5 rounded-xl bg-black/50 hover:bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-[#00D9FF] font-mono text-xs transition-colors flex items-center gap-2"
+                  title="View LinkedIn Profile"
                 >
-                  <Terminal size={15} className="text-[#00D9FF]" />
-                  <span>OPEN TERMINAL</span>
-                </button>
+                  <Linkedin size={15} />
+                  <span>LINKEDIN</span>
+                  <ExternalLink size={12} className="text-neutral-500" />
+                </a>
               </div>
             </div>
 
@@ -332,50 +425,40 @@ export default function App() {
             </div>
           </div>
 
-          {/* Scroll Indicator */}
+          {/* Subtle Scroll Indicator */}
           <div
-            onClick={() => scrollToSection('superpowers')}
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer text-neutral-400 hover:text-white transition-colors"
+            onClick={() => scrollToSection('about')}
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer text-neutral-500 hover:text-white transition-colors select-none"
           >
-            <span className="font-mono text-[10px] uppercase tracking-widest">SCROLL TO HARDWARE</span>
-            <ChevronDown size={18} className="animate-bounce text-[#FF4F2A]" />
+            <span className="font-mono text-[10px] uppercase tracking-widest">SCROLL TO DISCOVER</span>
+            <ChevronDown size={16} className="animate-bounce text-[#FF4F2A]" />
           </div>
         </section>
 
         {/* ========================================================
-            3. INTERACTIVE 3D TECH KEYBOARD
+            2. ABOUT ME (Moved directly after Hero)
             ======================================================== */}
-        <section id="superpowers" className="py-24 px-6 md:px-12 max-w-7xl mx-auto border-t border-white/5">
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4F2A]/10 border border-[#FF4F2A]/30 text-[#FF4F2A] font-mono text-xs uppercase tracking-widest mb-3">
-              <Cpu size={12} />
-              HARDWARE-ACCELERATED TALENT
-            </div>
-            <h2 className="text-3xl md:text-6xl font-black text-white tracking-tight uppercase">
-              MY TECHNICAL SUPERPOWERS.
-            </h2>
-            <p className="text-neutral-400 font-mono text-sm max-w-2xl mt-2">
-              An interactive 3D mechanical keyboard built with Three.js. Click any keycap to inspect proficiency, telemetry data, and production use cases.
-            </p>
-          </div>
-
-          <InteractiveKeyboard />
-        </section>
+        <AboutSection />
 
         {/* ========================================================
-            4. PROJECT SHOWCASE (3D Circular Carousel)
+            3. TECHNICAL SKILLS (Categorized + 3D Mechanical Keyboard)
+            ======================================================== */}
+        <TechnicalSkillsSection />
+
+        {/* ========================================================
+            4. FEATURED PROJECTS (3D Circular Carousel + Code Insights)
             ======================================================== */}
         <section id="projects" className="py-24 px-6 md:px-12 max-w-7xl mx-auto border-t border-white/5">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D9FF]/10 border border-[#00D9FF]/30 text-[#00D9FF] font-mono text-xs uppercase tracking-widest mb-3">
               <Layers size={12} />
-              SYSTEM ARCHITECTURE & INITIATIVES
+              AUTHENTIC INITIATIVES
             </div>
             <h2 className="text-3xl md:text-6xl font-black text-white tracking-tight uppercase">
               FEATURED PROJECTS.
             </h2>
             <p className="text-neutral-400 font-mono text-sm max-w-2xl mt-2">
-              3D interactive carousel featuring Gaze Guard AI, Citra, Vernacular Pedagogy AI, Raksha Live Map, and Master Terminal Arcade.
+              Every project represents real codebases under active engineering. Inspect dossiers for architectures, tech stacks, and verified code insights.
             </p>
           </div>
 
@@ -383,41 +466,44 @@ export default function App() {
         </section>
 
         {/* ========================================================
-            FEATURE: INTERACTIVE CODE PLAYGROUND
+            ENGINEERING CODE PLAYGROUND
             ======================================================== */}
         <section className="px-6 md:px-12 max-w-7xl mx-auto">
           <InteractiveCodePlayground />
         </section>
 
         {/* ========================================================
-            5. ABOUT ME (Editorial + Halftone Portrait)
-            ======================================================== */}
-        <AboutSection />
-
-        {/* ========================================================
-            6. LEARNING JOURNEY (Interactive Timeline)
+            5. LEARNING JOURNEY (Actual 6-Stage Timeline)
             ======================================================== */}
         <LearningJourney />
 
         {/* ========================================================
-            7. ACHIEVEMENTS (Verified & Transparent)
+            6. ACHIEVEMENTS & CERTIFICATIONS (Verified + AWS Amplify Milestone)
             ======================================================== */}
         <AchievementsSection />
 
         {/* ========================================================
-            FEATURE: GITHUB DEVELOPER SECTION
+            GITHUB REPOSITORY PULSE
             ======================================================== */}
         <GitHubSection />
 
         {/* ========================================================
-            8. INTERACTIVE TERMINAL
+            INTERACTIVE TERMINAL
             ======================================================== */}
         <InteractiveTerminal />
 
         {/* ========================================================
-            9. CONTACT SECTION
+            7. CONTACT
             ======================================================== */}
         <ContactSection />
+
+        {/* ========================================================
+            8. FOOTER
+            ======================================================== */}
+        <Footer
+          onScrollToTop={scrollToTop}
+          onNavigate={(id) => scrollToSection(id)}
+        />
       </main>
     </div>
   );
