@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-heading);
+    background-color: #080808;
+    color: #F3F4F6;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Custom dark scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 9999px;
+  border: 1px solid #333333;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4F2A;
+}
+
+/* Grid & glow backgrounds */
+.bg-cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.bg-cyber-dots {
+  background-image: radial-gradient(rgba(255, 79, 42, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.text-glow-orange {
+  text-shadow: 0 0 20px rgba(255, 79, 42, 0.5), 0 0 40px rgba(255, 79, 42, 0.2);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 20px rgba(0, 217, 255, 0.5), 0 0 40px rgba(0, 217, 255, 0.2);
+}
+
+.box-glow-orange {
+  box-shadow: 0 0 30px rgba(255, 79, 42, 0.25), inset 0 0 15px rgba(255, 79, 42, 0.1);
+}
+
+.box-glow-cyan {
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.25), inset 0 0 15px rgba(0, 217, 255, 0.1);
+}
+
+/* Keyframes */
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(1.08); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 8s ease-in-out infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
